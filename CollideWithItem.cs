@@ -61,7 +61,7 @@ public class CollideWithItem : MonoBehaviour
 
     private void Clicker_ItemReceived()
     {
-        
+
         clickBar.SetActive(false);
 
     }
@@ -69,18 +69,18 @@ public class CollideWithItem : MonoBehaviour
     private void Clicker_ItemLost()
     {
         clickBar.SetActive(false);
-       
+
         StartCoroutine(EnableText(itemLostTxt));
         MainData.Instance.gameState = MainData.GameState.PlayingGame;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Item"))
+        Item item = other.GetComponent<Item>();
+        if (item != null)
         {
             MainData.Instance.gameState = MainData.GameState.HoldInput;
             clickBar.SetActive(true);
-            var item = other.GetComponent<Item>();
             item.ChaseQuality();
             Destroy(other.gameObject);
             if (item.canTrade)
